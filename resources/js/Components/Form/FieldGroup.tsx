@@ -1,3 +1,5 @@
+import { Form } from 'react-bootstrap';
+
 interface FieldGroupProps {
   name?: string;
   label?: string;
@@ -12,14 +14,18 @@ export default function FieldGroup({
   children
 }: FieldGroupProps) {
   return (
-    <div className="space-y-2">
+    <Form.Group className="mb-3">
       {label && (
-        <label className="block text-gray-800 select-none" htmlFor={name}>
+        <Form.Label htmlFor={name}>
           {label}:
-        </label>
+        </Form.Label>
       )}
       {children}
-      {error && <div className="text-red-500 mt-2 text-sm">{error}</div>}
-    </div>
+      {error && (
+        <Form.Control.Feedback type="invalid" className="d-block">
+          {error}
+        </Form.Control.Feedback>
+      )}
+    </Form.Group>
   );
 }

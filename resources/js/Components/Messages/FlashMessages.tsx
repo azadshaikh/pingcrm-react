@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import Alert from '@/Components/Alert/Alert';
+import { Alert } from 'react-bootstrap';
 
 export default function FlashedMessages() {
   const [visible, setVisible] = useState(true);
@@ -13,28 +13,36 @@ export default function FlashedMessages() {
   }, [flash, errors]);
 
   return (
-    <>
+    <div className="mb-4">
       {flash.success && visible && (
         <Alert
           variant="success"
-          message={flash.success}
+          dismissible
           onClose={() => setVisible(false)}
-        />
+        >
+          {flash.success}
+        </Alert>
       )}
+
       {flash.error && visible && (
         <Alert
-          variant="error"
-          message={flash.error}
+          variant="danger"
+          dismissible
           onClose={() => setVisible(false)}
-        />
+        >
+          {flash.error}
+        </Alert>
       )}
+
       {formErrors > 0 && visible && (
         <Alert
-          variant="error"
-          message={'There are ' + formErrors + ' form errors.'}
+          variant="danger"
+          dismissible
           onClose={() => setVisible(false)}
-        />
+        >
+          There are {formErrors} form errors.
+        </Alert>
       )}
-    </>
+    </div>
   );
 }

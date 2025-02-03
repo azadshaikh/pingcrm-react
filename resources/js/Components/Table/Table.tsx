@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { Table as BSTable } from 'react-bootstrap';
 import get from 'lodash/get';
 import { ChevronRight } from 'lucide-react';
 
@@ -19,19 +20,20 @@ export default function Table<T>({
   getRowDetailsUrl
 }: TableProps<T>) {
   return (
-    <div className="overflow-x-auto bg-white rounded shadow">
-      <table className="w-full whitespace-nowrap">
+    <div className="bg-white rounded shadow overflow-x-auto">
+      <BSTable hover responsive className="mb-0">
         <thead>
-          <tr className="font-bold text-left">
+          <tr>
             {columns?.map(column => (
               <th
                 key={column.label}
                 colSpan={column.colSpan ?? 1}
-                className="px-6 pt-5 pb-4"
+                className="px-3 py-2"
               >
                 {column.label}
               </th>
             ))}
+            {getRowDetailsUrl && <th className="w-px"></th>}
           </tr>
         </thead>
         <tbody>
@@ -39,8 +41,8 @@ export default function Table<T>({
           {rows?.length === 0 && (
             <tr>
               <td
-                className="px-6 py-24 border-t text-center"
-                colSpan={columns.length}
+                className="text-center py-5"
+                colSpan={getRowDetailsUrl ? columns.length + 1 : columns.length}
               >
                 No data found.
               </td>
@@ -48,17 +50,14 @@ export default function Table<T>({
           )}
           {rows?.map((row, index) => {
             return (
-              <tr
-                key={index}
-                className="hover:bg-gray-100 focus-within:bg-gray-100"
-              >
+              <tr key={index}>
                 {columns.map(column => {
                   return (
-                    <td key={column.name} className="border-t">
+                    <td key={column.name}>
                       <Link
                         tabIndex={-1}
                         href={getRowDetailsUrl?.(row) as string}
-                        className="flex items-center px-6 py-4 focus:text-indigo focus:outline-none"
+                        className="d-flex align-items-center px-3 py-2 text-decoration-none text-body"
                       >
                         {column.renderCell?.(row) ??
                           get(row, column.name) ??
@@ -67,19 +66,21 @@ export default function Table<T>({
                     </td>
                   );
                 })}
-                <td className="w-px border-t">
-                  <Link
-                    href={getRowDetailsUrl?.(row)!}
-                    className="flex items-center px-4 focus:outline-none"
-                  >
-                    <ChevronRight size={24} className="text-gray-400" />
-                  </Link>
-                </td>
+                {getRowDetailsUrl && (
+                  <td className="w-px">
+                    <Link
+                      href={getRowDetailsUrl(row)}
+                      className="d-flex align-items-center px-3"
+                    >
+                      <ChevronRight size={24} className="text-secondary" />
+                    </Link>
+                  </td>
+                )}
               </tr>
             );
           })}
         </tbody>
-      </table>
+      </BSTable>
     </div>
   );
 }

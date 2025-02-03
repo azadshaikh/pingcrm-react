@@ -1,50 +1,43 @@
 import React from 'react';
+import { Alert as BootstrapAlert } from 'react-bootstrap';
 import { Check, CircleX, TriangleAlert } from 'lucide-react';
 import CloseButton from '@/Components/Button/CloseButton';
 
-interface Alert {
+interface AlertProps {
   message: string;
   icon?: React.ReactNode;
   action?: React.ReactNode;
   onClose?: () => void;
-  variant?: 'success' | 'error' | 'warning';
+  variant?: 'success' | 'danger' | 'warning';
 }
 
 export default function Alert({
   icon,
   action,
   message,
-  variant,
+  variant = 'success',
   onClose
-}: Alert) {
-  const color = {
-    success: 'green',
-    error: 'red',
-    warning: 'yellow'
-  }[variant || 'success'];
-
-  const backGroundColor = {
-    success: 'bg-green-500 text-white',
-    error: 'bg-red-500 text-white',
-    warning: 'bg-yellow-500 text-yellow-800'
-  }[variant || 'success'];
-
-  const iconComponent = {
+}: AlertProps) {
+  const iconMap = {
     success: <Check size={20} />,
-    error: <CircleX size={20} />,
+    danger: <CircleX size={20} />,
     warning: <TriangleAlert size={20} />
-  }[variant || 'success'];
+  };
 
   return (
-    <div
-      className={`${backGroundColor} px-4 mb-8 flex items-center justify-between rounded max-w-3xl`}
+    <BootstrapAlert
+      variant={variant}
+      dismissible={!!onClose}
+      onClose={onClose}
+      className="d-flex align-items-center justify-content-between mb-4"
     >
-      <div className="flex items-center space-x-2">
-        {icon || iconComponent}
-        <div className="py-4 text-sm font-medium">{message}</div>
+      <div className="d-flex align-items-center gap-2">
+        <span className="d-flex align-items-center">
+          {icon || iconMap[variant]}
+        </span>
+        <span className="py-1 fw-medium">{message}</span>
       </div>
-      {action}
-      {onClose && <CloseButton onClick={onClose} color={color} />}
-    </div>
+      {action && <div className="ms-auto me-2">{action}</div>}
+    </BootstrapAlert>
   );
 }

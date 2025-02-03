@@ -1,4 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
+import { Button, Container } from 'react-bootstrap';
 import MainLayout from '@/Layouts/MainLayout';
 import FilterBar from '@/Components/FilterBar/FilterBar';
 import Pagination from '@/Components/Pagination/Pagination';
@@ -17,40 +18,50 @@ function Index() {
   } = organizations;
 
   return (
-    <div>
-      <h1 className="mb-8 text-3xl font-bold">Organizations</h1>
-      <div className="flex items-center justify-between mb-6">
+    <Container fluid>
+      <div className="page-header mb-4">
+        <h1 className="fs-2 fw-bold">Organizations</h1>
+      </div>
+
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <FilterBar />
-        <Link
-          className="btn-indigo focus:outline-none"
+        <Button
+          as={Link}
           href={route('organizations.create')}
+          variant="primary"
         >
           <span>Create</span>
-          <span className="hidden md:inline"> Organization</span>
-        </Link>
+          <span className="d-none d-md-inline"> Organization</span>
+        </Button>
       </div>
-      <Table
-        columns={[
-          {
-            label: 'Name',
-            name: 'name',
-            renderCell: row => (
-              <>
-                {row.name}
-                {row.deleted_at && (
-                  <Trash2 size={16} className="ml-2 text-gray-400" />
-                )}
-              </>
-            )
-          },
-          { label: 'City', name: 'city' },
-          { label: 'Phone', name: 'phone', colSpan: 2 }
-        ]}
-        rows={data}
-        getRowDetailsUrl={row => route('organizations.edit', row.id)}
-      />
-      <Pagination links={links} />
-    </div>
+
+      <div className="content-card">
+        <Table
+          columns={[
+            {
+              label: 'Name',
+              name: 'name',
+              renderCell: row => (
+                <div className="d-flex align-items-center">
+                  {row.name}
+                  {row.deleted_at && (
+                    <Trash2 size={16} className="ms-2 text-secondary" />
+                  )}
+                </div>
+              )
+            },
+            { label: 'City', name: 'city' },
+            { label: 'Phone', name: 'phone', colSpan: 2 }
+          ]}
+          rows={data}
+          getRowDetailsUrl={row => route('organizations.edit', row.id)}
+        />
+      </div>
+
+      <div className="mt-4">
+        <Pagination links={links} />
+      </div>
+    </Container>
   );
 }
 

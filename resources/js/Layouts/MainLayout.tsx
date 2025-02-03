@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react';
+import { Container, Row, Col, Navbar } from 'react-bootstrap';
 import MainMenu from '@/Components/Menu/MainMenu';
 import FlashMessages from '@/Components/Messages/FlashMessages';
 import TopHeader from '@/Components/Header/TopHeader';
@@ -13,29 +14,30 @@ export default function MainLayout({ title, children }: MainLayoutProps) {
   return (
     <>
       <Head title={title} />
-      <div className="flex flex-col">
-        <div className="flex flex-col h-screen">
-          <div className="md:flex">
-            <TopHeader />
-            <BottomHeader />
-          </div>
-          <div className="flex flex-grow overflow-hidden">
-            <MainMenu className="flex-shrink-0 hidden w-56 p-12 overflow-y-auto bg-indigo-800 md:block" />
-            {/**
-             * We need to scroll the content of the page, not the whole page.
-             * So we need to add `scroll-region="true"` to the div below.
-             *
-             * [Read more](https://inertiajs.com/pages#scroll-regions)
-             */}
-            <div
-              className="w-full px-4 py-8 overflow-hidden overflow-y-auto md:p-12"
-              scroll-region="true"
-            >
-              <FlashMessages />
-              {children}
-            </div>
-          </div>
-        </div>
+      <div className="min-vh-100 d-flex flex-column">
+        {/* Header Section */}
+        <Navbar expand="md" className="flex-column p-0">
+          <TopHeader />
+          <BottomHeader />
+        </Navbar>
+
+        {/* Main Content Section */}
+        <Container fluid className="flex-grow-1">
+          <Row className="h-100">
+            {/* Sidebar */}
+            <Col md={3} lg={2} className="d-none d-md-block bg-primary sidebar">
+              <MainMenu className="p-3" />
+            </Col>
+
+            {/* Main Content */}
+            <Col md={9} lg={10} className="main-content px-4 py-3">
+              <div className="h-100 overflow-auto" scroll-region="true">
+                <FlashMessages />
+                {children}
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </div>
     </>
   );

@@ -1,8 +1,11 @@
-import { ComponentProps } from 'react';
+import { Form } from 'react-bootstrap';
 
-interface SelectInputProps extends ComponentProps<'select'> {
+interface SelectInputProps {
+  name?: string;
   error?: string;
+  className?: string;
   options: { value: string; label: string }[];
+  [key: string]: any;
 }
 
 export default function SelectInput({
@@ -13,19 +16,18 @@ export default function SelectInput({
   ...props
 }: SelectInputProps) {
   return (
-    <select
+    <Form.Select
       id={name}
       name={name}
+      isInvalid={!!error}
+      className={className}
       {...props}
-      className={`form-select w-full focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 border-gray-300 rounded ${
-        error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : ''
-      }`}
     >
       {options?.map(({ value, label }, index) => (
         <option key={index} value={value}>
           {label}
         </option>
       ))}
-    </select>
+    </Form.Select>
   );
 }

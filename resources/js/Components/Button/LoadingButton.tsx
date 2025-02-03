@@ -1,7 +1,7 @@
-import cx from 'classnames';
+import { Button, Spinner } from 'react-bootstrap';
+import classNames from 'classnames';
 
-interface LoadingButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface LoadingButtonProps extends React.ComponentProps<typeof Button> {
   loading: boolean;
 }
 
@@ -9,20 +9,26 @@ export default function LoadingButton({
   loading,
   className,
   children,
+  disabled,
   ...props
 }: LoadingButtonProps) {
-  const classNames = cx(
-    'flex items-center',
-    'focus:outline-none',
-    {
-      'pointer-events-none bg-opacity-75 select-none': loading
-    },
-    className
-  );
   return (
-    <button disabled={loading} className={classNames} {...props}>
-      {loading && <div className="mr-2 btn-spinner" />}
+    <Button
+      disabled={loading || disabled}
+      className={classNames('d-flex align-items-center', className)}
+      {...props}
+    >
+      {loading && (
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          className="me-2"
+          aria-hidden="true"
+        />
+      )}
       {children}
-    </button>
+    </Button>
   );
 }

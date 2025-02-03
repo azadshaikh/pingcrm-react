@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { Pagination as BSPagination } from 'react-bootstrap';
 import classNames from 'classnames';
 
 interface PaginationProps {
@@ -13,7 +14,7 @@ export default function Pagination({ links = [] }: PaginationProps) {
   if (links.length === 3) return null;
 
   return (
-    <div className="flex flex-wrap mt-6 -mb-1">
+    <BSPagination className="mt-4 flex-wrap">
       {links?.map(link => {
         return link?.url === null ? (
           <PageInactive key={link.label} label={link.label} />
@@ -21,7 +22,7 @@ export default function Pagination({ links = [] }: PaginationProps) {
           <PaginationItem key={link.label} {...link} />
         );
       })}
-    </div>
+    </BSPagination>
   );
 }
 
@@ -32,20 +33,6 @@ interface PaginationItem {
 }
 
 function PaginationItem({ active, label, url }: PaginationItem) {
-  const className = classNames(
-    [
-      'mr-1 mb-1',
-      'px-4 py-3',
-      'border border-solid border-gray-300 rounded',
-      'text-sm',
-      'hover:bg-white',
-      'focus:outline-none focus:border-indigo-700 focus:text-indigo-700'
-    ],
-    {
-      'bg-white': active
-    }
-  );
-
   /**
    * Note: In general you should be aware when using `dangerouslySetInnerHTML`.
    *
@@ -53,17 +40,18 @@ function PaginationItem({ active, label, url }: PaginationItem) {
    * It will be either `&laquo; Previous` or `Next &raquo;`
    */
   return (
-    <Link className={className} href={url as string}>
+    <BSPagination.Item
+      active={active}
+      className={classNames('mb-2', { 'bg-white': active })}
+      linkAs={Link}
+      linkProps={{ href: url as string }}
+    >
       <span dangerouslySetInnerHTML={{ __html: label }}></span>
-    </Link>
+    </BSPagination.Item>
   );
 }
 
 function PageInactive({ label }: Pick<PaginationItem, 'label'>) {
-  const className = classNames(
-    'mr-1 mb-1 px-4 py-3 text-sm border rounded border-solid border-gray-300 text-gray'
-  );
-
   /**
    * Note: In general you should be aware when using `dangerouslySetInnerHTML`.
    *
@@ -71,6 +59,8 @@ function PageInactive({ label }: Pick<PaginationItem, 'label'>) {
    * It will be either `&laquo; Previous` or `Next &raquo;`
    */
   return (
-    <div className={className} dangerouslySetInnerHTML={{ __html: label }} />
+    <BSPagination.Item disabled className="mb-2">
+      <span dangerouslySetInnerHTML={{ __html: label }}></span>
+    </BSPagination.Item>
   );
 }

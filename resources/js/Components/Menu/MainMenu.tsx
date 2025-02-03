@@ -1,3 +1,4 @@
+import { Nav } from 'react-bootstrap';
 import MainMenuItem from '@/Components/Menu/MainMenuItem';
 import { Building, CircleGauge, Printer, Users } from 'lucide-react';
 
@@ -7,7 +8,7 @@ interface MainMenuProps {
 
 export default function MainMenu({ className }: MainMenuProps) {
   return (
-    <div className={className}>
+    <Nav className={`flex-column ${className}`}>
       <MainMenuItem
         text="Dashboard"
         link="dashboard"
@@ -28,6 +29,6 @@ export default function MainMenu({ className }: MainMenuProps) {
         link="reports"
         icon={<Printer size={20} />}
       />
-    </div>
+    </Nav>
   );
 }

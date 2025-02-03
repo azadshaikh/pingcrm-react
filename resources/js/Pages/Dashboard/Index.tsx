@@ -1,22 +1,22 @@
 import { Link } from '@inertiajs/react';
+import { Button, Container } from 'react-bootstrap';
 import MainLayout from '@/Layouts/MainLayout';
 
 function DashboardPage() {
   return (
-    <div>
-      <h1 className="mb-8 text-3xl font-bold">Dashboard</h1>
-      <p className="mb-12 leading-normal">
-        Hey there! Welcome to Ping CRM, a demo app designed to help illustrate
-        how
+    <Container fluid>
+      <h1 className="mb-4 fs-2 fw-bold">Dashboard - Azad</h1>
+      <p className="mb-4 lead">
+        Hey there! Welcome to Ping CRM, a demo app designed to help illustrate how
         <a
-          className="mx-1 text-indigo-600 underline hover:text-orange-500"
+          className="mx-1 text-primary text-decoration-underline"
           href="https://inertiajs.com"
         >
           Inertia.js
         </a>
         works with
         <a
-          className="ml-1 text-indigo-600 underline hover:text-orange-500"
+          className="ms-1 text-primary text-decoration-underline"
           href="https://reactjs.org/"
         >
           React
@@ -24,14 +24,14 @@ function DashboardPage() {
         .
       </p>
       <div>
-        <Link className="mr-1 btn-indigo" href="/500">
+        <Button as={Link} href="/500" variant="primary" className="me-2">
           500 error
-        </Link>
-        <Link className="btn-indigo" href="/404">
+        </Button>
+        <Button as={Link} href="/404" variant="primary">
           404 error
-        </Link>
+        </Button>
       </div>
-    </div>
+    </Container>
   );
 }
 

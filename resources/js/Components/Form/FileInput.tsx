@@ -1,8 +1,9 @@
-import React, { useState, useRef, ComponentProps } from 'react';
+import React, { useState, useRef } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { fileSize } from '@/utils';
-import { Omit } from 'lodash';
 
-interface FileInputProps extends Omit<ComponentProps<'input'>, 'onChange'> {
+interface FileInputProps {
+  name?: string;
   error?: string;
   onChange?: (file: File | null) => void;
 }
@@ -18,8 +19,6 @@ export default function FileInput({ name, error, onChange }: FileInputProps) {
   function handleRemove() {
     setFile(null);
     onChange?.(null);
-
-    // fileInput?.current?.value = '';
   }
 
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
@@ -31,17 +30,14 @@ export default function FileInput({ name, error, onChange }: FileInputProps) {
   }
 
   return (
-    <div
-      className={`form-input w-full focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 border-gray-300 rounded p-0 ${
-        error && 'border-red-400 focus:border-red-400 focus:ring-red-400'
-      }`}
-    >
-      <input
+    <div className={`border rounded ${error ? 'border-danger' : 'border-secondary-subtle'}`}>
+      <Form.Control
         id={name}
         ref={fileInput}
         type="file"
-        className="hidden"
+        className="d-none"
         onChange={handleChange}
+        isInvalid={!!error}
       />
       {!file && (
         <div className="p-2">
@@ -49,10 +45,10 @@ export default function FileInput({ name, error, onChange }: FileInputProps) {
         </div>
       )}
       {file && (
-        <div className="flex items-center justify-between p-2">
-          <div className="flex-1 pr-1">
+        <div className="d-flex align-items-center justify-content-between p-2">
+          <div className="text-truncate pe-2">
             {file?.name}
-            <span className="ml-1 text-xs text-gray-600">
+            <span className="ms-1 text-secondary small">
               ({fileSize(file?.size)})
             </span>
           </div>
@@ -63,19 +59,19 @@ export default function FileInput({ name, error, onChange }: FileInputProps) {
   );
 }
 
-interface BrowseButtonProps extends ComponentProps<'button'> {
+interface BrowseButtonProps {
   text: string;
+  onClick?: () => void;
 }
 
-function BrowseButton({ text, onClick, ...props }: BrowseButtonProps) {
+function BrowseButton({ text, onClick }: BrowseButtonProps) {
   return (
-    <button
-      {...props}
-      type="button"
-      className="px-4 py-1 text-xs font-medium text-white bg-gray-600 rounded-sm focus:outline-none hover:bg-gray-700"
+    <Button
+      size="sm"
+      variant="secondary"
       onClick={onClick}
     >
       {text}
-    </button>
+    </Button>
   );
 }

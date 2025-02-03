@@ -1,23 +1,19 @@
-import { ComponentProps } from 'react';
-import classNames from 'classnames';
+import { Button } from 'react-bootstrap';
 import { X } from 'lucide-react';
 
-interface CloseButtonProps extends ComponentProps<'button'> {
-  color: string | 'red' | 'green';
+interface CloseButtonProps {
+  color?: 'danger' | 'success';
+  onClick?: () => void;
 }
 
-export default function CloseButton({ color, onClick }: CloseButtonProps) {
-  const className = classNames('block -mr-2 fill-current', {
-    'text-red-700 group-hover:text-red-800': color === 'red',
-    'text-green-700 group-hover:text-green-800': color === 'green'
-  });
+export default function CloseButton({ color = 'danger', onClick }: CloseButtonProps) {
   return (
-    <button
+    <Button
+      variant="link"
+      className={`p-1 text-${color} border-0`}
       onClick={onClick}
-      type="button"
-      className="focus:outline-none group p-2"
     >
-      <X size={16} className={className} />
-    </button>
+      <X size={16} />
+    </Button>
   );
 }

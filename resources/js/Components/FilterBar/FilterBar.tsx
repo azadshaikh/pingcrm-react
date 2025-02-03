@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { usePage, router } from '@inertiajs/react';
 import { usePrevious } from 'react-use';
+import { InputGroup, Form, Button, Dropdown } from 'react-bootstrap';
 import SelectInput from '@/Components/Form/SelectInput';
 import pickBy from 'lodash/pickBy';
 import { ChevronDown } from 'lucide-react';
@@ -57,70 +58,64 @@ export default function FilterBar() {
   }
 
   return (
-    <div className="flex items-center w-full max-w-md mr-4">
-      <div className="relative flex bg-white rounded shadow">
-        <div
-          style={{ top: '100%' }}
-          className={`absolute ${opened ? '' : 'hidden'}`}
-        >
-          <div
-            onClick={() => setOpened(false)}
-            className="fixed inset-0 z-20 bg-black opacity-25"
-          />
-          <div className="relative z-30 w-64 px-4 py-6 mt-2 bg-white rounded shadow-lg space-y-4">
+    <div className="d-flex align-items-center w-100 max-w-md me-4">
+      <InputGroup>
+        <Dropdown>
+          <Dropdown.Toggle
+            variant="light"
+            className="border d-flex align-items-center"
+          >
+            <span className="d-none d-md-inline me-2">Filter</span>
+            <ChevronDown size={14} />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu className="p-3" style={{ width: '250px' }}>
             {filters.hasOwnProperty('role') && (
-              <FieldGroup label="Role" name="role">
-                <SelectInput
+              <Form.Group className="mb-3">
+                <Form.Label>Role</Form.Label>
+                <Form.Select
                   name="role"
                   value={values.role}
                   onChange={handleChange}
-                  options={[
-                    { value: '', label: '' },
-                    { value: 'user', label: 'User' },
-                    { value: 'owner', label: 'Owner' }
-                  ]}
-                />
-              </FieldGroup>
+                >
+                  <option value="">Select Role</option>
+                  <option value="user">User</option>
+                  <option value="owner">Owner</option>
+                </Form.Select>
+              </Form.Group>
             )}
-            <FieldGroup label="Trashed" name="trashed">
-              <SelectInput
+
+            <Form.Group>
+              <Form.Label>Trashed</Form.Label>
+              <Form.Select
                 name="trashed"
                 value={values.trashed}
                 onChange={handleChange}
-                options={[
-                  { value: '', label: '' },
-                  { value: 'with', label: 'With Trashed' },
-                  { value: 'only', label: 'Only Trashed' }
-                ]}
-              />
-            </FieldGroup>
-          </div>
-        </div>
-        <button
-          onClick={() => setOpened(true)}
-          className="px-4 border-r rounded-l md:px-6 hover:bg-gray-100 focus:outline-none focus:border-white focus:ring-2 focus:ring-indigo-400 focus:z-10"
-        >
-          <div className="flex items-center">
-            <span className="hidden text-gray-700 md:inline">Filter</span>
-            <ChevronDown size={14} strokeWidth={3} className="md:ml-2" />
-          </div>
-        </button>
-        <TextInput
+              >
+                <option value="">Select Status</option>
+                <option value="with">With Trashed</option>
+                <option value="only">Only Trashed</option>
+              </Form.Select>
+            </Form.Group>
+          </Dropdown.Menu>
+        </Dropdown>
+
+        <Form.Control
           name="search"
           placeholder="Search…"
           autoComplete="off"
           value={values.search}
           onChange={handleChange}
-          className="border-0 rounded-l-none focus:ring-2"
         />
-      </div>
-      <button
+      </InputGroup>
+
+      <Button
+        variant="link"
+        className="ms-3 text-secondary"
         onClick={reset}
-        className="ml-3 text-sm text-gray-600 hover:text-gray-700 focus:text-indigo-700 focus:outline-none"
-        type="button"
       >
         Reset
-      </button>
+      </Button>
     </div>
   );
 }

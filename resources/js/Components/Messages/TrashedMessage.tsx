@@ -1,3 +1,4 @@
+import { Button } from 'react-bootstrap';
 import { Trash2 } from 'lucide-react';
 import Alert from '@/Components/Alert/Alert';
 
@@ -16,11 +17,14 @@ export default function TrashedMessage({
       message={message}
       icon={<Trash2 size={20} />}
       action={
-        <button
+        <Button
+          variant="link"
+          size="sm"
           onClick={onRestore}
-          children="Restore"
-          className="text-yellow-800 focus:outline-none text-xs font-medium hover:underline"
-        />
+          className="text-warning p-0 fw-medium"
+        >
+          Restore
+        </Button>
       }
     />
   );

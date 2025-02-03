@@ -1,20 +1,20 @@
-import { ComponentProps } from 'react';
+import { Form } from 'react-bootstrap';
 
-interface CheckboxInputProps extends ComponentProps<'input'> {
+interface CheckboxInputProps {
   label?: string;
+  name?: string;
+  [key: string]: any;
 }
 
 export function CheckboxInput({ label, name, ...props }: CheckboxInputProps) {
   return (
-    <label className="flex items-center select-none" htmlFor={name}>
-      <input
-        id={name}
-        name={name}
-        type="checkbox"
-        className="mr-2 form-checkbox rounded text-indigo-600 focus:ring-indigo-600"
-        {...props}
-      />
-      <span className="text-sm">{label}</span>
-    </label>
+    <Form.Check
+      type="checkbox"
+      id={name}
+      name={name}
+      label={label}
+      className="user-select-none"
+      {...props}
+    />
   );
 }

@@ -1,7 +1,10 @@
-import { ComponentProps } from 'react';
+import { Form } from 'react-bootstrap';
 
-interface TextInputProps extends ComponentProps<'input'> {
+interface TextInputProps {
+  name?: string;
   error?: string;
+  className?: string;
+  [key: string]: any;
 }
 
 export default function TextInput({
@@ -11,13 +14,12 @@ export default function TextInput({
   ...props
 }: TextInputProps) {
   return (
-    <input
+    <Form.Control
       id={name}
       name={name}
+      isInvalid={!!error}
+      className={className}
       {...props}
-      className={`form-input w-full focus:outline-none focus:ring-1 focus:ring-indigo-400 focus:border-indigo-400 border-gray-300 rounded ${
-        error ? 'border-red-400 focus:border-red-400 focus:ring-red-400' : ''
-      } ${className}`}
     />
   );
 }
