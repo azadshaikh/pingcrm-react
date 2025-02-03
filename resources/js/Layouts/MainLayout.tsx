@@ -1,9 +1,11 @@
 import { Head } from '@inertiajs/react';
-import { Container, Row, Col, Navbar } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import MainMenu from '@/Components/Menu/MainMenu';
 import FlashMessages from '@/Components/Messages/FlashMessages';
 import TopHeader from '@/Components/Header/TopHeader';
 import BottomHeader from '@/Components/Header/BottomHeader';
+import MobileSidebar from '@/Components/Sidebar/MobileSidebar';
+import { SidebarProvider } from '@/Contexts/SidebarContext';
 
 interface MainLayoutProps {
   title?: string;
@@ -12,33 +14,35 @@ interface MainLayoutProps {
 
 export default function MainLayout({ title, children }: MainLayoutProps) {
   return (
-    <>
+    <SidebarProvider>
       <Head title={title} />
-      <div className="min-vh-100 d-flex flex-column">
-        {/* Header Section */}
-        <Navbar expand="md" className="flex-column p-0">
-          <TopHeader />
+      <div className="min-vh-100 d-flex">
+        {/* Desktop Sidebar */}
+        <div className="sidebar bg-primary d-none d-lg-block" style={{ width: '260px' }}>
+          {/* Logo Section */}
+          <div className="px-4 py-3">
+            <TopHeader />
+          </div>
+
+          {/* Navigation Menu */}
+          <MainMenu className="px-4 mt-3" />
+        </div>
+
+        {/* Mobile Sidebar */}
+        <MobileSidebar />
+
+        {/* Main Content Wrapper */}
+        <div className="flex-grow-1 main-content">
+          {/* Top Navigation */}
           <BottomHeader />
-        </Navbar>
 
-        {/* Main Content Section */}
-        <Container fluid className="flex-grow-1">
-          <Row className="h-100">
-            {/* Sidebar */}
-            <Col md={3} lg={2} className="d-none d-md-block bg-primary sidebar">
-              <MainMenu className="p-3" />
-            </Col>
-
-            {/* Main Content */}
-            <Col md={9} lg={10} className="main-content px-4 py-3">
-              <div className="h-100 overflow-auto" scroll-region="true">
-                <FlashMessages />
-                {children}
-              </div>
-            </Col>
-          </Row>
-        </Container>
+          {/* Main Content */}
+          <Container fluid className="px-4 py-4">
+            <FlashMessages />
+            {children}
+          </Container>
+        </div>
       </div>
-    </>
+    </SidebarProvider>
   );
 }

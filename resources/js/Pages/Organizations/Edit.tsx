@@ -68,7 +68,7 @@ const Edit = () => {
                 name="name"
                 error={errors.name}
                 value={data.name}
-                onChange={e => setData('name', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('name', e.target.value)}
               />
             </FieldGroup>
 
@@ -78,7 +78,7 @@ const Edit = () => {
                 type="email"
                 error={errors.email}
                 value={data.email}
-                onChange={e => setData('email', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('email', e.target.value)}
               />
             </FieldGroup>
 
@@ -87,7 +87,7 @@ const Edit = () => {
                 name="phone"
                 error={errors.phone}
                 value={data.phone}
-                onChange={e => setData('phone', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('phone', e.target.value)}
               />
             </FieldGroup>
 
@@ -96,7 +96,7 @@ const Edit = () => {
                 name="address"
                 error={errors.address}
                 value={data.address}
-                onChange={e => setData('address', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('address', e.target.value)}
               />
             </FieldGroup>
 
@@ -105,7 +105,7 @@ const Edit = () => {
                 name="city"
                 error={errors.city}
                 value={data.city}
-                onChange={e => setData('city', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('city', e.target.value)}
               />
             </FieldGroup>
 
@@ -118,7 +118,7 @@ const Edit = () => {
                 name="region"
                 error={errors.region}
                 value={data.region}
-                onChange={e => setData('region', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('region', e.target.value)}
               />
             </FieldGroup>
 
@@ -127,7 +127,7 @@ const Edit = () => {
                 name="country"
                 error={errors.country}
                 value={data.country}
-                onChange={e => setData('country', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('country', e.target.value)}
                 options={[
                   {
                     value: '',
@@ -154,7 +154,7 @@ const Edit = () => {
                 name="postal_code"
                 error={errors.postal_code}
                 value={data.postal_code}
-                onChange={e => setData('postal_code', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('postal_code', e.target.value)}
               />
             </FieldGroup>
           </div>

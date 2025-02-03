@@ -43,8 +43,8 @@ function PaginationItem({ active, label, url }: PaginationItem) {
     <BSPagination.Item
       active={active}
       className={classNames('mb-2', { 'bg-white': active })}
-      linkAs={Link}
-      linkProps={{ href: url as string }}
+      as={Link}
+      href={url as string}
     >
       <span dangerouslySetInnerHTML={{ __html: label }}></span>
     </BSPagination.Item>

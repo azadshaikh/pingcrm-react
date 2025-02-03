@@ -26,9 +26,9 @@ function Index() {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <FilterBar />
         <Button
-          as={Link}
           href={route('organizations.create')}
           variant="primary"
+          as={Link as any}
         >
           <span>Create</span>
           <span className="d-none d-md-inline"> Organization</span>
