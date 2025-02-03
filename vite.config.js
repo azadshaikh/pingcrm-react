@@ -4,7 +4,14 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [
-    laravel(['resources/js/app.tsx', 'resources/scss/app.scss']),
+    laravel({
+      input: ['resources/js/app.tsx', 'resources/scss/app.scss'],
+      refresh: [
+        'app/**',
+        'routes/**',
+        'resources/**',
+    ],
+    }),
     react()
   ],
   css: {
@@ -24,5 +31,19 @@ export default defineConfig({
         }
       }
     }
-  },
+  }
+  // Add watch configuration
+  // watch: {
+  //   reloadPageOnChange: true,
+  //   usePolling: true,
+  //   include: [
+  //     'resources/**/*.php',
+  //     'resources/**/*.js',
+  //     'resources/**/*.jsx',
+  //     'resources/**/*.ts',
+  //     'resources/**/*.tsx',
+  //     'resources/**/*.css',
+  //     'resources/**/*.scss'
+  //   ]
+  // }
 });

@@ -5,7 +5,7 @@ import MainLayout from '@/Layouts/MainLayout';
 function DashboardPage() {
   return (
     <Container fluid>
-      <h1 className="mb-4 fs-2 fw-bold">Dashboard - Azad</h1>
+      <h1 className="mb-4 fs-2 fw-bold">Dashboard</h1>
       <p className="mb-4 lead">
         Hey there! Welcome to Ping CRM, a demo app designed to help illustrate how
         <a
