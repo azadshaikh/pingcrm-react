@@ -24,10 +24,10 @@ function DashboardPage() {
         .
       </p>
       <div>
-        <Button as={Link} href="/500" variant="primary" className="me-2">
+        <Button href="/500" variant="primary" className="me-2">
           500 error
         </Button>
-        <Button as={Link} href="/404" variant="primary">
+        <Button href="/404" variant="primary">
           404 error
         </Button>
       </div>
